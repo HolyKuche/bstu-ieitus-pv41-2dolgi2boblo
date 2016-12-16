@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean name="tdtbDS" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/"/>
+        <property name="resourceRef" value="true"/>
+    </bean>
+
+    <!--миграция-->
+    <bean id="flywayMigrate" class="org.flywaydb.core.Flyway" init-method="migrate">
+        <property name="locations" value="migration"/>
+        <property name="dataSource" ref="tdtbDS"/>
+        <property name="table" value="db_version"/>
+        <property name="baselineOnMigrate" value="true"/>
+        <property name="baselineVersionAsString" value="0.0.1"/>
+        <property name="baselineDescription" value="Init Database Migration"/>
+        <property name="validateOnMigrate" value="true"/>
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+          depends-on="flywayMigrate">
+        <property name="dataSource" ref="tdtbDS"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.use_sql_comments">true</prop>
+                <prop key="hibernate.max_fetch_depth">2</prop>
+
+                <prop key="hibernate.jdbc.batch_size">100</prop>
+                <prop key="default_batch_fetch_size">100</prop>
+                <prop key="hibernate.order_inserts">true</prop>
+                <prop key="hibernate.order_updates">true</prop>
+
+                <prop key="hibernate.generate_statistics">false</prop>
+                <prop key="hibernate.jdbc.use_streams_for_binary">true</prop>
+
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_structured_entries">true</prop>
+                <prop key="hibernate.cache.region.factory_class">
+                    org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+                </prop>
+            </props>
+        </property>
+
+        <property name="packagesToScan" value="ru.tdtb.business.domain"/>
+
+        <property name="namingStrategy">
+            <bean class="org.hibernate.cfg.ImprovedNamingStrategy"/>
+        </property>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="openSessionInterceptor" class="org.springframework.orm.hibernate4.support.OpenSessionInterceptor">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+</beans>
