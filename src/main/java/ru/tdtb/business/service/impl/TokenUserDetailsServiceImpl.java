@@ -10,14 +10,14 @@ import ru.tdtb.business.dao.UserDao;
 import ru.tdtb.business.domain.User;
 import ru.tdtb.application.security.CustomUserDetails;
 import ru.tdtb.business.service.AbstractService;
-import ru.tdtb.business.service.TokenUserDetailsService;
+import ru.tdtb.business.service.security.TokenUserDetailsService;
 import ru.tdtb.business.service.exception.InvalidApiTokenException;
 
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Transactional
-public class TokenUserDetailsServiceImpl extends AbstractService implements UserDetailsService, TokenUserDetailsService{
+public class TokenUserDetailsServiceImpl extends AbstractService implements UserDetailsService, TokenUserDetailsService {
     @Autowired
     private UserDao dao;
 
