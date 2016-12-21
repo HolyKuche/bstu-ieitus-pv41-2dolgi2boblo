@@ -1,6 +1,7 @@
 package ru.tdtb.business.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.tdtb.business.dao.UserDao;
 import ru.tdtb.business.domain.User;
 import ru.tdtb.business.dto.UserDto;
@@ -10,6 +11,7 @@ import ru.tdtb.business.service.UserService;
 
 import java.util.List;
 
+@Service
 public class UserServiceImpl extends AbstractService implements UserService {
     @Autowired
     private UserDao dao;

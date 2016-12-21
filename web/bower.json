@@ -19,8 +19,7 @@
   "dependencies": {
     "jquery": "~1.11.3",
     "angular": "angularjs#~1.5.0",
-    "angular-material": "^1.1.0",
-    "material-design-icons": "^3.0.1"
+    "angular-material": "^1.1.0"
   },
   "resolutions": {
     "angular": "~1.5.0",

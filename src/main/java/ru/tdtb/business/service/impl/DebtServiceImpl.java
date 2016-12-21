@@ -1,6 +1,7 @@
 package ru.tdtb.business.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.tdtb.business.dao.DebtDao;
 import ru.tdtb.business.domain.Debt;
 import ru.tdtb.business.dto.DebtDto;
@@ -8,6 +9,7 @@ import ru.tdtb.application.mapping.TdtbMapper;
 import ru.tdtb.business.service.AbstractService;
 import ru.tdtb.business.service.DebtService;
 
+@Service
 public class DebtServiceImpl extends AbstractService implements DebtService {
     @Autowired
     private DebtDao dao;
