@@ -1,0 +1,56 @@
+<md-content style="width: 500px; display: flex; flex-direction: column; align-items: center">
+    <img class="login-image" src="/resources/img/logo.png"/>
+    <md-tabs md-center-tabs md-dynamic-height>
+        <md-tab label="Вход">
+            <md-content class="md-padding">
+                <form class="flex-column" name='loginForm'
+                      action="j_spring_security_check" method='POST'>
+                    <div>
+                        <md-input-container style="width: 100%">
+                            <label>Логин</label>
+                            <md-icon md-svg-icon="/resources/img/icons/svg/account_circle_black.svg"></md-icon>
+                            <input id='username'
+                                   type='text'
+                                   name='j_username'
+                                   required>
+                        </md-input-container>
+                    </div>
+                    <div>
+                        <md-input-container>
+                            <label>Пароль</label>
+                            <md-icon md-svg-icon="/resources/img/icons/svg/key_black.svg"></md-icon>
+                            <input  id="password"
+                                    type='password'
+                                    name='j_password'
+                                    required/>
+                        </md-input-container>
+                    </div>
+                    <md-button type="submit" class="md-raised" ng-click="login()">Войти</md-button>
+                </form>
+            </md-content>
+        </md-tab>
+        <md-tab label="Регистрация">
+            <md-content class="md-padding">
+                <form class="flex-column" name='registerForm'>
+                    <md-input-container>
+                        <label>Имя</label>
+                        <input ng-model="user.firstName" required type="text">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Фамилия</label>
+                        <input ng-model="user.lastName" required type="text">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Логин</label>
+                        <input ng-model="user.login" required type="text">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Пароль</label>
+                        <input ng-model="user.hashPass" required type="password">
+                    </md-input-container>
+                    <md-button type="submit" class="md-raised" ng-click="register()">Зарегистрироваться</md-button>
+                </form>
+            </md-content>
+        </md-tab>
+    </md-tabs>
+</md-content>

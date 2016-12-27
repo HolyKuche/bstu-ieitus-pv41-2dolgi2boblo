@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "USER")
+@Table(name = "USER_")
 public class User extends AbstractDomain<Long> {
     @Id
     @Column(name = "ID")
@@ -22,9 +22,6 @@ public class User extends AbstractDomain<Long> {
 
     @Column(name = "LAST_NAME")
     private String lastName;
-
-    @Column(name = "AVATAR_PATH")
-    private String avatarPath;
 
     @Column(name = "LOGIN")
     private String login;

@@ -12,11 +12,8 @@ public class IndexController {
         return new ModelAndView("index");
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
-        return new ModelAndView("common/login");
-    }
-
-    public ModelAndView error() {
-        return new ModelAndView("common/403");
+        return new ModelAndView("login/login");
     }
 }

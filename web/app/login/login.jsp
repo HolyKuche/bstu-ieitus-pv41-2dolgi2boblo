@@ -6,18 +6,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>2dolgi2boblo</title>
     <link rel="icon" type="image/x-icon" href="<c:url value="/resources/img/give-me-my-money.png"/>"/>
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/stylesheets/styles.css"/>"/>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/stylesheets/login.css"/>"/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/stylesheets/lib.css"/>"/>
 </head>
-<body ng-app="tdtb">
-    <md-nav-bar md-selected-nav-item="'main'">
-        <md-nav-item md-nav-href="#" name="main">Главная</md-nav-item>
-        <md-nav-item md-nav-href="#user" name="user">Параметры учетной записи</md-nav-item>
-        <md-nav-item md-nav-href="<c:url value="/j_spring_security_logout"/>" name="logout">Выход</md-nav-item>
-    </md-nav-bar>
-    <ng-view></ng-view>
+<body ng-app="tdtb" ng-controller="LoginCtrl">
 </body>
-</html>
 <script type="text/javascript" src="<c:url value="/resources/javascripts/lib.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/javascripts/full.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/javascripts/templates.js"/>"></script>

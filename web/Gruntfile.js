@@ -34,7 +34,7 @@ module.exports = function (grunt) {
                     return mainFiles.map(function (filepath) {
                         // Use minified files if available
                         var min = filepath.replace(/\.js$/, '.min.js');
-                        return grunt.file.exists(min) ? min : filepath;
+                        return filepath;//grunt.file.exists(min) ? min : filepath;
                     });
                 },
                 mainFiles: {
@@ -109,7 +109,7 @@ module.exports = function (grunt) {
                         //    removeScriptTypeAttributes:     true,
                         //    removeStyleLinkTypeAttributes:  true
                     },
-                    module: 'toir'
+                    module: 'tdtb'
                 }
             }
         },

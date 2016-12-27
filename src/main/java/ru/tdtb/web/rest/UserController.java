@@ -19,8 +19,8 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Long create(@RequestBody UserDto user) {
-        return service.create(user);
+    public void create(@RequestBody UserDto user) {
+        service.create(user);
     }
 
     @RequestMapping(method = RequestMethod.PUT)

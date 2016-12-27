@@ -22,6 +22,9 @@
 
     <http auto-config="false" use-expressions="true" pattern="/api/**"
           entry-point-ref="restAuthenticationEntryPoint">
+        <!--public-->
+        <intercept-url pattern="/api/user/**" access="permitAll()"/>
+
         <!--private-->
         <intercept-url pattern="/api/**" access="isAuthenticated()"/>
 
