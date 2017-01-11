@@ -1,0 +1,25 @@
+<md-dialog>
+    <form name="userForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Редактирование данных пользователя</h2>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="width: 40vw" layout-padding>
+            <div layout="row">
+                <md-input-container flex="50">
+                    <label>Имя</label>
+                    <input name="firstName" ng-model="currentUser.firstName" required>
+                </md-input-container>
+                <md-input-container flex="50">
+                    <label>Фамилия</label>
+                    <input name="lastName" ng-model="currentUser.lastName" required>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button class="md-primary" ng-click="ok()" ng-disabled="userForm.$invalid">Сохранить изменения</md-button>
+            <md-button ng-click="cancel()">Отмена</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

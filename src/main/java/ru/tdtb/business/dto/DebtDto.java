@@ -13,6 +13,6 @@ public class DebtDto {
    private Long money;
    private Date initDateTime;
    private String description;
-   private User who;
-   private User whom;
+   private UserDto who;
+   private UserDto whom;
 }

@@ -1,15 +1,17 @@
 angular.module('tdtb').controller('LoginCtrl', function ($scope, $mdDialog) {
     function DialogController($scope, $http) {
         $scope.user = {};
-
-        $scope.login = function () {
-
-        };
+        $scope.selectedTab = 0;
+        $scope.loginAlreadyExistError = false;
 
         $scope.register = function () {
-            $http.post("/api/user/", $scope.user).then(function (res) {
-
-            });
+            $http.post("/api/user/", $scope.user)
+                .then(function (res) {
+                    $scope.loginAlreadyExistError = false;
+                    $scope.selectedTab = 0;
+                }, function (res) {
+                    $scope.loginAlreadyExistError = true;
+                });
         };
     }
 

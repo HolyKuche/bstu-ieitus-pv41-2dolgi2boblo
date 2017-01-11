@@ -1,7 +1,6 @@
 package ru.tdtb.business.service.impl;
 
 import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +32,11 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
+    public UserDto getCurrent() {
+        return mapper.map(getCurrentUser(), UserDto.class);
+    }
+
+    @Override
     public Long create(UserDto user) {
         user.setHashPass(encryptUserPassword(user.getHashPass()));
         return dao.save(mapper.map(user, User.class));
@@ -40,17 +44,45 @@ public class UserServiceImpl extends AbstractService implements UserService {
 
     @Override
     public void update(UserDto user) {
-        dao.update(mapper.map(user, User.class));
+        User current = getCurrentUser();
+        if (current.getId().equals(user.getId())) {
+            user.setLogin(current.getLogin());
+            user.setHashPass(current.getHashPass());
+            User mappedUser = mapper.map(user, User.class);
+            mappedUser.setFriends(current.getFriends());
+            dao.update(mappedUser);
+        }
     }
 
     @Override
     public void delete(Long id) {
-        dao.delete(id);
+        if (getCurrentUser().getId().equals(id)) {
+            dao.delete(id);
+        }
     }
 
     @Override
-    public List<UserDto> getFriends(Long userId) {
-        return mapper.map(dao.get(userId).getFriends(), UserDto.class);
+    public List<UserDto> getFriendsByCurrentUser() {
+        return mapper.map(getCurrentUser().getFriends(), UserDto.class);
+    }
+
+    @Override
+    public void addFriendByCurrentUser(UserDto user) {
+        getCurrentUser().getFriends().add(mapper.map(user, User.class));
+    }
+
+    @Override
+    public void deleteFriendByCurrentUser(Long userId) {
+        User user = getCurrentUser().getFriends().stream()
+                .filter(u -> u.getId() == userId)
+                .findFirst()
+                .get();
+        getCurrentUser().getFriends().remove(user);
+    }
+
+    @Override
+    public List<UserDto> getBySearchString(String searchString) {
+        return mapper.map(dao.getBySearchString(searchString), UserDto.class);
     }
 
     private String encryptUserPassword(String password) {

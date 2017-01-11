@@ -36,7 +36,7 @@ public abstract class AbstractDaoImpl<T, IDType extends Serializable> implements
 
     @Override
     public void update(T o) {
-        getCurrentSession().update(o);
+        getCurrentSession().merge(o);
     }
 
     @Override
@@ -51,8 +51,6 @@ public abstract class AbstractDaoImpl<T, IDType extends Serializable> implements
 
     @Override
     public void delete(IDType id) {
-        getCurrentSession().createQuery(String.format("delete %s r where r.id=:id", getType().getName()))
-                .setParameter("id", id)
-                .executeUpdate();
+        delete(get(id));
     }
 }

@@ -16,4 +16,9 @@ public class IndexController {
     public ModelAndView login() {
         return new ModelAndView("login/login");
     }
+
+    @RequestMapping(value = "/debts", method = RequestMethod.GET)
+    public ModelAndView debts() {
+        return new ModelAndView("debts/debts");
+    }
 }

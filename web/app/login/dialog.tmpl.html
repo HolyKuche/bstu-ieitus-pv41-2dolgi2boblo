@@ -1,6 +1,6 @@
 <md-content style="width: 500px; display: flex; flex-direction: column; align-items: center">
-    <img class="login-image" src="/resources/img/logo.png"/>
-    <md-tabs md-center-tabs md-dynamic-height>
+    <img src="/resources/img/logo.png"/>
+    <md-tabs md-center-tabs md-dynamic-height md-selected="selectedTab">
         <md-tab label="Вход">
             <md-content class="md-padding">
                 <form class="flex-column" name='loginForm'
@@ -25,7 +25,7 @@
                                     required/>
                         </md-input-container>
                     </div>
-                    <md-button type="submit" class="md-raised" ng-click="login()">Войти</md-button>
+                    <md-button id="submit" type="submit" class="md-raised">Войти</md-button>
                 </form>
             </md-content>
         </md-tab>
@@ -40,7 +40,7 @@
                         <label>Фамилия</label>
                         <input ng-model="user.lastName" required type="text">
                     </md-input-container>
-                    <md-input-container>
+                    <md-input-container md-is-error="loginAlreadyExistError">
                         <label>Логин</label>
                         <input ng-model="user.login" required type="text">
                     </md-input-container>

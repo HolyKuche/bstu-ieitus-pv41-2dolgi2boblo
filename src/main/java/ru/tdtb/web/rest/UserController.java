@@ -18,6 +18,11 @@ public class UserController {
         return service.get(id);
     }
 
+    @RequestMapping(value = "/current", method = RequestMethod.GET)
+    public UserDto getCurrent() {
+        return service.getCurrent();
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public void create(@RequestBody UserDto user) {
         service.create(user);
@@ -33,8 +38,23 @@ public class UserController {
         service.delete(id);
     }
 
-    @RequestMapping(value = "/{userId}/friends", method = RequestMethod.GET)
-    public List<UserDto> getFriends(@PathVariable Long userId) {
-        return service.getFriends(userId);
+    @RequestMapping(value = "/friends", method = RequestMethod.GET)
+    public List<UserDto> getFriendsByCurrentUser() {
+        return service.getFriendsByCurrentUser();
+    }
+
+    @RequestMapping(value = "/friends", method = RequestMethod.POST)
+    public void addFriendByCurrentUser(@RequestBody UserDto user) {
+        service.addFriendByCurrentUser(user);
+    }
+
+    @RequestMapping(value = "/friends/{userId}", method = RequestMethod.DELETE)
+    public void deleteFriendByCurrentUser(@PathVariable Long userId) {
+        service.deleteFriendByCurrentUser(userId);
+    }
+
+    @RequestMapping(value = "/search/{searchString}", method = RequestMethod.GET)
+    public List<UserDto> getBySearchString(@PathVariable String searchString) {
+        return service.getBySearchString(searchString);
     }
 }

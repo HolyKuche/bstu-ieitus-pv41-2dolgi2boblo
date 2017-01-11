@@ -16,10 +16,13 @@
 
     <mvc:annotation-driven>
         <mvc:message-converters>
-            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
-            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper" ref="customObjectMapper"/>
+            </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+
+    <bean id="customObjectMapper" class="ru.tdtb.application.api.CustomObjectMapper"/>
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 

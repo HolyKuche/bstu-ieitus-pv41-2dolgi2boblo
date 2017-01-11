@@ -1,0 +1,48 @@
+<md-dialog>
+    <form name="debtForm" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Создание долга</h2>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content style="width: 30vw" layout-padding>
+            <div layout="row">
+                <md-input-container flex="60">
+                    <label>Кому</label>
+                    <md-select name="whom" ng-model="debt.whom" required>
+                        <md-option ng-repeat="friend in friends" ng-value="friend" style="text-align: center">{{friend.firstName}} {{friend.lastName}}</md-option>
+                    </md-select>
+                    <div ng-messages="debtForm.whom.$error" role="alert">
+                        <div ng-message="required">
+                            Выберите друга из списка
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container flex="40">
+                    <label>Сколько (руб)</label>
+                    <input required name="money" type="number" step="any" ng-model="debt.money" min="1">
+                    <div ng-messages="debtForm.money.$error" multiple md-auto-hide="true">
+                        <div ng-message="required">
+                            Заполните поле
+                        </div>
+                        <div ng-message="min">
+                            Минимальная сумма долга 1 руб
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <md-input-container class="md-block">
+                <label>Описание</label>
+                <input ng-model="debt.description" max-rows="100">
+            </md-input-container>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button class="md-primary" ng-click="createDebt()" ng-disabled="debtForm.$invalid">Создать</md-button>
+            <md-button ng-click="cancel()">Отмена</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
