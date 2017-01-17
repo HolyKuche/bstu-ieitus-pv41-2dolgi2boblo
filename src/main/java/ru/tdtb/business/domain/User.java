@@ -29,7 +29,6 @@ public class User extends AbstractDomain<Long> {
     @Column(name = "HASH_PASS")
     private String hashPass;
 
-    @Column(name = "API_TOKEN")
     private String apiToken;
 
     @ManyToMany(fetch = FetchType.LAZY)

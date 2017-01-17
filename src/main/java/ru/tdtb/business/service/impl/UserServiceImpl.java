@@ -38,6 +38,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
 
     @Override
     public Long create(UserDto user) {
+        user.setLogin(user.getLogin().toLowerCase());
         user.setHashPass(encryptUserPassword(user.getHashPass()));
         return dao.save(mapper.map(user, User.class));
     }
