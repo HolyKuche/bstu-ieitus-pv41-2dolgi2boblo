@@ -2,7 +2,6 @@ package ru.tdtb.business.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.tdtb.business.domain.User;
 
 import java.util.Date;
 
@@ -15,4 +14,7 @@ public class DebtDto {
    private String description;
    private UserDto who;
    private UserDto whom;
+   private String importance;
+   private Boolean flag;
+   private Boolean haveImage;
 }

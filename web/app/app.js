@@ -4,7 +4,8 @@
 
     angular.module('tdtb', [
         'ngRoute',
-        'ngMaterial'
+        'ngMaterial',
+        'angularFileUpload'
     ]).config(function ($routeProvider) {
         $routeProvider.when("/", {
             redirectTo: "/debts"

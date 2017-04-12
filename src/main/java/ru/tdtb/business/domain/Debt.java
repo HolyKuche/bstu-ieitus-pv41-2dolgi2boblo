@@ -33,4 +33,13 @@ public class Debt extends AbstractDomain<Long> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "WHOM_ID")
     private User whom;
+
+    @Column(name = "IMPORTANCE")
+    private String importance;
+
+    @Column(name = "FLAG")
+    private Boolean flag;
+
+    @Column(name = "IMAGE_PATH")
+    private String imagePath;
 }

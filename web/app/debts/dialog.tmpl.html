@@ -1,4 +1,4 @@
-<md-dialog>
+<md-dialog id="creating-debt-modal">
     <form name="debtForm" ng-cloak>
         <md-toolbar>
             <div class="md-toolbar-tools">
@@ -6,12 +6,12 @@
             </div>
         </md-toolbar>
 
-        <md-dialog-content style="width: 30vw" layout-padding>
+        <md-dialog-content style="width: 30vw" layout-padding layout="column">
             <div layout="row">
                 <md-input-container flex="60">
                     <label>Кому</label>
                     <md-select name="whom" ng-model="debt.whom" required>
-                        <md-option ng-repeat="friend in friends" ng-value="friend" style="text-align: center">{{friend.firstName}} {{friend.lastName}}</md-option>
+                        <md-option class="friend-list-item" ng-repeat="friend in friends" ng-value="friend" style="text-align: center">{{friend.firstName}} {{friend.lastName}}</md-option>
                     </md-select>
                     <div ng-messages="debtForm.whom.$error" role="alert">
                         <div ng-message="required">
@@ -36,13 +36,26 @@
 
             <md-input-container class="md-block">
                 <label>Описание</label>
-                <input ng-model="debt.description" max-rows="100">
+                <input ng-model="debt.description" max-rows="100" name="description">
             </md-input-container>
+
+            <md-radio-group ng-model="debt.importance" layout="row" name="importance" required="">
+                <md-radio-button id="very-urgently-importance" value="very_urgently">Очень срочно</md-radio-button>
+                <md-radio-button id="urgently-importance" value="urgently" class="md-warn">Срочно</md-radio-button>
+                <md-radio-button id="middle-importance" value="middle" class="md-primary">Средне</md-radio-button>
+                <md-radio-button id="not-urgently-importance" value="not_urgently" class="md-primary">Не срочно</md-radio-button>
+            </md-radio-group>
+
+            <md-content layout-padding layout="row">
+                <md-checkbox ng-model="debt.flag" class="md-warn" name="flag">галочка</md-checkbox>
+                <input name="file" type="file" nv-file-select uploader="fileUploader">
+            </md-content>
+
         </md-dialog-content>
 
         <md-dialog-actions layout="row" layout-align="end center">
-            <md-button class="md-primary" ng-click="createDebt()" ng-disabled="debtForm.$invalid">Создать</md-button>
-            <md-button ng-click="cancel()">Отмена</md-button>
+            <md-button id="submit-creating-button" class="md-primary" ng-click="createDebt()" ng-disabled="debtForm.$invalid">Создать</md-button>
+            <md-button id="cancel-creating-button" ng-click="cancel()">Отмена</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

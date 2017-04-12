@@ -1,14 +1,21 @@
 angular.module('tdtb').controller('DebtsCtrl', function ($scope, $http, $mdDialog) {
-    $scope.outgoingDebts = [];
+    $scope.outgoingPages =[];
+    $scope.selectedOutgoingPage = {};
     $scope.incomingDebts = [];
     $scope.searchOutgoingDebtsText = "";
     $scope.searchIncomingDebtsText = "";
     $scope.friends = [];
     $scope.searchUserText = "";
     $scope.searching = false;
+    $scope.selectedPage = 0;
 
-    $http.get("/api/debt/all_outgoings_for_current_user").then(function (debts) {
-        $scope.outgoingDebts = debts.data;
+    $http.get("/api/debt/count_of_all_outgoings_for_current_user").then(function (count) {
+        $scope.outgoingsCount = count.data;
+        for (var i = 0; i < Math.ceil($scope.outgoingsCount / 4); i++) {
+            $scope.outgoingPages.push({
+                index: i + 1
+            });
+        }
     });
     $http.get("/api/debt/all_incomings_for_current_user").then(function (debts) {
         $scope.incomingDebts = debts.data;
@@ -17,9 +24,12 @@ angular.module('tdtb').controller('DebtsCtrl', function ($scope, $http, $mdDialo
         $scope.friends = friends.data;
     });
 
-    function DialogController($scope, $mdDialog) {
+    function DialogController($scope, $mdDialog, FileUploader) {
+        $scope.fileUploader = new FileUploader();
+
         $scope.debt = {
-            description: ""
+            description: "",
+            flag: false
         };
 
         $http.get("/api/user/friends").then(function (friends) {
@@ -30,6 +40,8 @@ angular.module('tdtb').controller('DebtsCtrl', function ($scope, $http, $mdDialo
             $http.post("/api/debt/", $scope.debt).then(function (debtId) {
                 $scope.debt.id = debtId.data;
                 $scope.debt.initDateTime = new Date();
+                $scope.fileUploader.queue[0].url = "/api/debt/" + $scope.debt.id + "/image";
+                $scope.fileUploader.uploadAll();
                 $mdDialog.hide($scope.debt);
             });
         };
@@ -39,14 +51,37 @@ angular.module('tdtb').controller('DebtsCtrl', function ($scope, $http, $mdDialo
         }
     }
 
+    $scope.loadPageOfOutgoings = function (pageNum) {
+        $http.get("/api/debt/all_outgoings_for_current_user", {
+            params: {
+                page_num: pageNum,
+                page_size: 4
+            }
+        }).then(function (debts) {
+            $scope.selectedOutgoingPage.debts = [];
+            $scope.selectedOutgoingPage = $scope.outgoingPages[pageNum - 1];
+            $scope.outgoingPages[pageNum - 1].debts = debts.data;
+        });
+    };
+
     $scope.createDebt = function () {
         $mdDialog.show({
             controller: DialogController,
             templateUrl: 'debts/dialog.tmpl.html',
             parent: angular.element(document.body),
             clickOutsideToClose: true
-        }).then(function (debt) {
-            $scope.outgoingDebts.splice(0, 0, debt);
+        }).then(function () {
+            $scope.outgoingsCount++;
+            if (Math.ceil($scope.outgoingsCount / 4) > $scope.outgoingPages.length) {
+                $scope.outgoingPages.push({
+                    index: Math.ceil($scope.outgoingsCount / 4)
+                });
+            }
+            if ($scope.selectedPage === 0) {
+                $scope.loadPageOfOutgoings(1);
+            } else {
+                $scope.selectedPage = 0;
+            }
         });
     };
 
